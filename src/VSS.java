@@ -10,7 +10,7 @@ public class VSS {
 
     private static int steps = 10000;
 
-    private static double lambda = 1;
+    static double lambda = 1;
 
     static double mu0 = 3.0;
     static double mu1 = 2.3;
@@ -56,7 +56,7 @@ public class VSS {
 
 
     public static void RunSim(double var){
-
+    	
         JSimSimulation simulation = null;
         Queue queue0 = null, queue1 = null, queue2 = null, queue3 = null, queue4 = null;
         Server server0 = null, server1 = null, server2 = null, server3 = null, server4 = null;
@@ -67,6 +67,9 @@ public class VSS {
             System.out.println("Initializing.");
             if (var == 0) {
                 System.out.println("Exponencial distribution");
+                
+                System.out.println("Computed values:");
+                Compute.compute();
             } else {
                 System.out.println("Gaussian distribution: " + var);
             }
@@ -165,12 +168,13 @@ public class VSS {
             simulation.message("Lw4 "+queue3.getLw());
             simulation.message("Lw5 "+queue4.getLw());
 
+            double Lq = lq0+lq1+lq2+lq3+lq4;
+            
             simulation.message(" ");
-            simulation.message("Lq "+(lq0+lq1+lq2+lq3+lq4));
+            simulation.message("Lq "+ Lq);
 
             simulation.message(" ");
-            simulation.message("Tq " + ((server0.getTransTq() + server1.getTransTq() + server2.getTransTq() + server3.getTransTq() + server4.getTransTq())
-                    / (server0.getCounter() + server1.getCounter() + server2.getCounter()+ server3.getCounter() + server4.getCounter())));
+            simulation.message("Tq " + Lq/lambda);
 
 
         } catch (JSimInvalidParametersException e) {
